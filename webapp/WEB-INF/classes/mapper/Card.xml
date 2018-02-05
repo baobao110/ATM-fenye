@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="inter.CardDAO">
+	<delete id="delete">
+		delete from card where number=#{number}
+	</delete>
+
+	<select id="Get" resultType="Card"> 
+		select * from card where username=#{username} and password=#{password}
+	</select>
+	<select id="GetCard" resultType="Card"> 
+		select * from card where number=#{number}
+	</select>
+	<update id="modifyPassword">
+		update card set password=#{newPassword} where number=#{number}
+	</update>
+	<update id="modifyMoney">
+		update card set money=#{money} where number=#{number}
+	</update>
+	<insert id="open" useGeneratedKeys="true" keyProperty="id">
+		insert card (number,password,money,createtime,modifytime,username) value (#{number},#{password},#{money},now(),now(),#{username})
+	</insert>
+	<select id="List" resultType="Card">
+  	select * from card where username=#{username} limit #{currentNumber},#{move}
+  </select>
+  <select id="totalNumber" resultType="int">
+  		select count(*) from card  where username=#{username}
+  	</select>
+</mapper>
+
